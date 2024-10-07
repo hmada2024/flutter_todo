@@ -150,3 +150,7 @@ class TodosState extends State<Todos> {
   }
 
 }
+
+extension on ScaffoldState {
+  void showSnackBar(Widget statusMessage) {}
+}
