@@ -5,12 +5,12 @@ List<Todo> todoFromJson(String str) => new List<Todo>.from(json.decode(str).map(
 String todoToJson(List<Todo> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Todo {
-    DateTime createdAt;
-    DateTime updatedAt;
-    int id;
-    String user;
-    String value;
-    String status;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+    int? id;
+    String? user;
+    String? value;
+    String? status;
 
     Todo({
       this.createdAt,
@@ -31,8 +31,8 @@ class Todo {
     );
 
     Map<String, dynamic> toJson() => {
-      "created_at": createdAt.toIso8601String(),
-      "updated_at": updatedAt.toIso8601String(),
+      "created_at": createdAt!.toIso8601String(),
+      "updated_at": updatedAt!.toIso8601String(),
       "id": id,
       "user": user,
       "value": value,

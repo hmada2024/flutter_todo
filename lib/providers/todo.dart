@@ -9,29 +9,29 @@ import 'package:flutter_todo/models/todo.dart';
 class TodoProvider with ChangeNotifier {
   bool _initialized = false;
 
-  // AuthProvier
-  AuthProvider authProvider;
+  // AuthProvider
+  late AuthProvider authProvider;
 
   // Stores separate lists for open and closed todos.
-  List<Todo> _openTodos = List<Todo>();
-  List<Todo> _closedTodos = List<Todo>();
+  List<Todo> _openTodos = List<Todo>.empty(growable: true);
+  List<Todo> _closedTodos = List<Todo>.empty(growable: true);
 
   // The API is paginated. If there are more results we store
   // the API url in order to lazily load them later.
-  String _openTodosApiMore; 
-  String _closedTodosApiMore;
+  String? _openTodosApiMore; 
+  String? _closedTodosApiMore;
 
   // API Service
-  ApiService apiService;
+  late ApiService apiService;
 
   // Provides access to private variables.
   bool get initialized => _initialized;
   List<Todo> get openTodos => _openTodos;
   List<Todo> get closedTodos => _closedTodos;
-  String get openTodosApiMore => _openTodosApiMore;
-  String get closedTodosApiMore => _closedTodosApiMore;
+  String? get openTodosApiMore => _openTodosApiMore;
+  String? get closedTodosApiMore => _closedTodosApiMore;
 
-  // AuthProvider is required to instaniate our ApiService.
+  // AuthProvider is required to instantiate our ApiService.
   // This gives the service access to the user token and provider methods.
   TodoProvider(AuthProvider authProvider) {
     this.apiService = ApiService(authProvider);
@@ -52,6 +52,7 @@ class TodoProvider with ChangeNotifier {
       _closedTodosApiMore = closedTodosResponse.apiMore;
 
       notifyListeners();
+
     }
     on AuthException {
       // API returned a AuthException, so user is logged out.
@@ -146,11 +147,6 @@ class TodoProvider with ChangeNotifier {
   Future<void> loadMore(String activeTab) async {
     // Set apiMore based on the activeTab.
     String apiMore = (activeTab == 'open') ? _openTodosApiMore : _closedTodosApiMore;
-
-    // If there's no more items to load, return early.
-    if (apiMore == null) {
-      return;
-    }
 
     try {
       // Make the API call to get more todos.

@@ -105,8 +105,8 @@ class LogInFormState extends State<LogInForm> {
                     text: 'Register.',
                     style: Styles.p.copyWith(color: Colors.blue[500]),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => {
-                        Navigator.pushNamed(context, '/register'),
+                      ..onTap = () {
+                        Navigator.pushNamed(context, '/register');
                       },
                   ),
                 ],
@@ -120,8 +120,8 @@ class LogInFormState extends State<LogInForm> {
                 text: 'Forgot Your Password?',
                 style: Styles.p.copyWith(color: Colors.blue[500]),
                 recognizer: TapGestureRecognizer()
-                  ..onTap = () => {
-                     Navigator.pushNamed(context, '/password-reset'),
+                  ..onTap = () {
+                     Navigator.pushNamed(context, '/password-reset');
                   }
               ),
             ),

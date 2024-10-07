@@ -10,8 +10,8 @@ enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 class AuthProvider with ChangeNotifier {
 
   Status _status = Status.Uninitialized;
-  String _token;
-  NotificationText _notification;
+  late String _token;
+  late NotificationText _notification;
 
   Status get status => _status;
   String get token => _token;
@@ -21,18 +21,14 @@ class AuthProvider with ChangeNotifier {
 
   initAuthProvider() async {
     String token = await getToken();
-    if (token != null) {
-      _token = token;
-      _status = Status.Authenticated;
-    } else {
-      _status = Status.Unauthenticated;
-    }
-    notifyListeners();
+    _token = token;
+    _status = Status.Authenticated;
+      notifyListeners();
   }
 
   Future<bool> login(String email, String password) async {
     _status = Status.Authenticating;
-    _notification = null;
+    _notification = _notification;
     notifyListeners();
 
     final url = "$api/login";
@@ -42,7 +38,7 @@ class AuthProvider with ChangeNotifier {
       'password': password,
     };
 
-    final response = await http.post(url, body: body,);
+    final response = await http.post(url as Uri, body: body,);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> apiResponse = json.decode(response.body);
@@ -67,7 +63,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<Map> register(String name, String email, String password, String passwordConfirm) async {
-    final url = "$api/register";
+    final  url = "$api/register";
 
     Map<String, String> body = {
       'name': name,
@@ -81,7 +77,7 @@ class AuthProvider with ChangeNotifier {
       "message": 'Unknown error.'
     };
 
-    final response = await http.post( url, body: body, );
+    final response = await http.post(  url as Uri , body: body, );
 
     if (response.statusCode == 200) {
       _notification = NotificationText('Registration successful, please log in.', type: 'info');
@@ -116,7 +112,7 @@ class AuthProvider with ChangeNotifier {
       'email': email,
     };
 
-    final response = await http.post( url, body: body, );
+    final response = await http.post( url as Uri, body: body, );
 
     if (response.statusCode == 200) {
       _notification = NotificationText('Reset sent. Please check your inbox.', type: 'info');
@@ -133,9 +129,9 @@ class AuthProvider with ChangeNotifier {
     await storage.setString('name', apiResponse['user']['name']);
   }
 
-  Future<String> getToken() async {
+  Future<String?> getToken() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
-    String token = storage.getString('token');
+    String? token = storage.getString('token');
     return token;
   }
 

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:flutter_todo/providers/auth.dart';
 import 'package:flutter_todo/providers/todo.dart';
-
 import 'package:flutter_todo/views/loading.dart';
 import 'package:flutter_todo/views/login.dart';
-import 'package:flutter_todo/views/register.dart';
 import 'package:flutter_todo/views/password_reset.dart';
+import 'package:flutter_todo/views/register.dart';
 import 'package:flutter_todo/views/todos.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/auth.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
-      builder: (context) => AuthProvider(),
+      create: (context) => AuthProvider(),
       child: MaterialApp(
         initialRoute: '/',
         routes: {
@@ -26,6 +25,7 @@ void main() {
     ),
   );
 }
+
 
 class Router extends StatelessWidget {
   @override
@@ -42,7 +42,7 @@ class Router extends StatelessWidget {
             return LogIn();
           case Status.Authenticated:
             return ChangeNotifierProvider(
-              builder: (context) => TodoProvider(authProvider),
+              create: (context) => TodoProvider(authProvider),
               child: Todos(),
             );
           default:

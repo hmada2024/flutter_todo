@@ -29,7 +29,7 @@ class _AddTodoState extends State<AddTodo> {
               controller: textController,
             ),
           ),
-          ButtonBar(
+          OverflowBar(
             children: <Widget>[
               new FlatButton(
                 child: new Text('Save'),
