@@ -26,7 +26,7 @@ class PasswordReset extends StatelessWidget {
 }
 
 class PasswordResetForm extends StatefulWidget {
-  const PasswordResetForm({Key key}) : super(key: key);
+  const PasswordResetForm({Key? key}) : super(key: key);
 
   @override
   PasswordResetFormState createState() => PasswordResetFormState();
@@ -35,16 +35,16 @@ class PasswordResetForm extends StatefulWidget {
 class PasswordResetFormState extends State<PasswordResetForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String email;
-  String password;
-  String message = '';
+  String? email;
+  String? password;
+  String? message = '';
 
   Map response = new Map();
 
   Future<void> submit() async {
     final form = _formKey.currentState;
-    if (form.validate()) {
-      bool success = await Provider.of<AuthProvider>(context).passwordReset(email);
+    if (form!.validate()) {
+      bool success = await Provider.of<AuthProvider>(context).passwordReset(email!);
       if (success) {
         Navigator.pushReplacementNamed( context, '/login' );
       } else {
@@ -70,7 +70,7 @@ class PasswordResetFormState extends State<PasswordResetForm> {
           ),
           SizedBox(height: 10.0),
           Text(
-            message,
+            message!,
             textAlign: TextAlign.center,
             style: Styles.error,
           ),
@@ -80,7 +80,7 @@ class PasswordResetFormState extends State<PasswordResetForm> {
               hintText: 'Email',
             ),
             validator: (value) {
-              email = value.trim();
+              email = value!.trim();
               return Validate.validateEmail(value);
             }
           ),

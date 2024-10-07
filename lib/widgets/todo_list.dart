@@ -23,7 +23,7 @@ Widget todoList(BuildContext context, List<Todo> todos, toggleTodo, loadMore) {
       return ListTile(
         key: Key((todo.id).toString()),
         leading: Icon(statusIcon),
-        title: Text(todo.value),
+        title: Text(todo.value!),
         enabled: todo.status != 'processing',
         onTap: () {
           toggleTodo(context, todo);

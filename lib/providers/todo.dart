@@ -91,12 +91,12 @@ class TodoProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> toggleTodo(Todo todo) async {
+  Future<bool> toggleTodo(Todo? todo) async {
     List<Todo> openTodosModified = _openTodos;
     List<Todo> closedTodosModified = _closedTodos;
 
     // Get current status in case there's an error and new status isn't set.
-    String status = todo.status;
+    String? status = todo!.status;
 
     // Get the new status for the the todo.
     String statusModified = todo.status == 'open' ? 'closed' : 'open';
@@ -107,7 +107,7 @@ class TodoProvider with ChangeNotifier {
 
     // Updates the status via an API call.
     try {
-      await apiService.toggleTodoStatus(todo.id, statusModified);
+      await apiService.toggleTodoStatus(todo.id!, statusModified);
     }
     on AuthException {
       // API returned a AuthException, so user is logged out.
@@ -146,11 +146,11 @@ class TodoProvider with ChangeNotifier {
 
   Future<void> loadMore(String activeTab) async {
     // Set apiMore based on the activeTab.
-    String apiMore = (activeTab == 'open') ? _openTodosApiMore : _closedTodosApiMore;
+    String? apiMore = (activeTab == 'open') ? _openTodosApiMore : _closedTodosApiMore;
 
     try {
       // Make the API call to get more todos.
-      TodoResponse todosResponse = await apiService.getTodos(activeTab, url: apiMore);
+      TodoResponse todosResponse = await apiService.getTodos(activeTab, url: apiMore!);
 
       // Get the current todos for the active tab.
       List<Todo> currentTodos = (activeTab == 'open') ? _openTodos : _closedTodos;

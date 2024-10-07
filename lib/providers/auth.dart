@@ -20,8 +20,8 @@ class AuthProvider with ChangeNotifier {
   final String api = 'https://laravelreact.com/api/v1/auth';
 
   initAuthProvider() async {
-    String token = await getToken();
-    _token = token;
+    String? token = await getToken();
+    _token = token!;
     _status = Status.Authenticated;
       notifyListeners();
   }

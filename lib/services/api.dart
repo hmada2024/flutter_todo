@@ -10,8 +10,8 @@ import 'package:flutter_todo/models/todo.dart';
 
 class ApiService {
 
-  AuthProvider authProvider;
-  String token;
+  late AuthProvider authProvider;
+  late String token;
 
   // The AuthProvider is passed in when this class instantiated.
   // This provides access to the user token required for API calls.
@@ -46,7 +46,7 @@ class ApiService {
     }
 
     final response = await http.get(
-      url,
+      url as Uri,
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $token'
       },
@@ -72,7 +72,7 @@ class ApiService {
     };
 
     final response = await http.patch(
-      url,
+      url as Uri,
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $token'
       },
@@ -89,7 +89,7 @@ class ApiService {
     };
 
     final response = await http.post(
-      api,
+      api as Uri,
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $token'
       },

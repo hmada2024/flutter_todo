@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddTodo extends StatefulWidget {
   final Function addTodo;
 
-  AddTodo(this.addTodo, {Key key}) : super(key: key);
+  AddTodo(this.addTodo, {Key? key}) : super(key: key);
 
   @override
   _AddTodoState createState() => _AddTodoState();
@@ -29,17 +29,29 @@ class _AddTodoState extends State<AddTodo> {
               controller: textController,
             ),
           ),
-          OverflowBar(
-            children: <Widget>[
-              new FlatButton(
-                child: new Text('Save'),
-                onPressed: () async {
-                  await widget.addTodo(textController.text);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+        OverflowBar(
+  children: <Widget>[
+    TextButton(
+      child: Text('Save'),
+      onPressed: () async {
+        await widget.addTodo(textController.text);
+        Navigator.pop(context);
+      },
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white, backgroundColor: Colors.blue[500],
+        padding: EdgeInsets.symmetric(vertical: 18.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+          side: BorderSide(
+            color: Colors.blue[500]!,
+            width: 2,
           ),
+        ),
+      ),
+    ),
+  ],
+)
+
         ],
       ),
     );

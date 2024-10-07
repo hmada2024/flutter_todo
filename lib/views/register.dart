@@ -26,7 +26,7 @@ class Register extends StatelessWidget {
 }
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key key}) : super(key: key);
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   RegisterFormState createState() => RegisterFormState();
@@ -35,20 +35,20 @@ class RegisterForm extends StatefulWidget {
 class RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String name;
-  String email;
-  String password;
-  String passwordConfirm;
-  String message = '';
+  String? name;
+  String? email;
+  String? password;
+  String? passwordConfirm;
+  String? message = '';
 
   Map response = new Map();
 
 
   Future<void> submit() async {
     final form = _formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       response = await Provider.of<AuthProvider>(context)
-          .register(name, email, password, passwordConfirm);
+          .register(name!, email!, password!, passwordConfirm!);
       if (response['success']) {
         Navigator.pop(context);
       } else {
@@ -74,7 +74,7 @@ class RegisterFormState extends State<RegisterForm> {
           ),
           SizedBox(height: 10.0),
           Text(
-            message,
+            message!,
             textAlign: TextAlign.center,
             style: Styles.error,
           ),
@@ -84,7 +84,7 @@ class RegisterFormState extends State<RegisterForm> {
               hintText: 'Name',
             ),
             validator: (value) {
-              name = value.trim();
+              name = value!.trim();
               return Validate.requiredField(value, 'Name is required.');
             }
           ),
@@ -94,7 +94,7 @@ class RegisterFormState extends State<RegisterForm> {
               hintText: 'Email',
             ),
             validator: (value) {
-              email = value.trim();
+              email = value!.trim();
               return Validate.validateEmail(value);
             }
           ),
@@ -105,7 +105,7 @@ class RegisterFormState extends State<RegisterForm> {
               hintText: 'Password',
             ),
             validator: (value) {
-              password = value.trim();
+              password = value!.trim();
               return Validate.requiredField(value, 'Password is required.');
             }
           ),
@@ -116,7 +116,7 @@ class RegisterFormState extends State<RegisterForm> {
               hintText: 'Password Confirm',
             ),
             validator: (value) {
-              passwordConfirm = value.trim();
+              passwordConfirm = value!.trim();
               return Validate.requiredField(value, 'Password confirm is required.');
             }
           ),

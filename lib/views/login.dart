@@ -29,7 +29,7 @@ class LogIn extends StatelessWidget {
 }
 
 class LogInForm extends StatefulWidget {
-  const LogInForm({Key key}) : super(key: key);
+  const LogInForm({Key? key}) : super(key: key);
 
   @override
   LogInFormState createState() => LogInFormState();
@@ -38,14 +38,14 @@ class LogInForm extends StatefulWidget {
 class LogInFormState extends State<LogInForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String email;
-  String password;
-  String message = '';
+  String? email;
+  String? password;
+  String? message = '';
 
   Future<void> submit() async {
     final form = _formKey.currentState;
-    if (form.validate()) {
-      await Provider.of<AuthProvider>(context).login(email, password);
+    if (form!.validate()) {
+      await Provider.of<AuthProvider>(context).login(email!, password!);
     }
   }
 
@@ -72,7 +72,7 @@ class LogInFormState extends State<LogInForm> {
               hintText: 'Email',
             ),
             validator: (value) {
-              email = value.trim();
+              email = value!.trim();
               return Validate.validateEmail(value);
             }
           ),
@@ -83,7 +83,7 @@ class LogInFormState extends State<LogInForm> {
               hintText: 'Password',
             ),
             validator: (value) {
-              password = value.trim();
+              password = value!.trim();
               return Validate.requiredField(value, 'Password is required.');
             }
           ),

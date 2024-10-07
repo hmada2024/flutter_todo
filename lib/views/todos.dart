@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:flutter_todo/providers/auth.dart';
 import 'package:flutter_todo/providers/todo.dart';
 import 'package:flutter_todo/models/todo.dart';
